@@ -28,8 +28,16 @@
 			this.current.index = -1;
 			this.loaded = 0;
 
+<<<<<<< HEAD
 			this.show();
 			this.preload(this.start);
+=======
+			this.preload(function () {
+				this.show();
+				this.start();
+			});
+				
+>>>>>>> master
 		},
 
 		preload: function (callback) {
@@ -40,12 +48,32 @@
 				img.onload = this.imgLoaded.bind(this, x, this.images[x], callback);
 				img.src = this.images[x];
 			}
+<<<<<<< HEAD
 		},
 
 		imgLoaded: function (index, src, callback, event) {
 			this.loaded += 1;
 
 			if (this.loaded === this.images.length && callback) {
+=======
+
+			this.current.text = this.gallery.text('0%')
+					.fill('#ccc')
+					.font({ family: 'Arial', size: 10, anchor: 'middle' })
+					.move('50%', '40%', true);
+		},
+
+		imgLoaded: function (index, src, callback, event) {
+			var percent;
+
+			this.loaded += 1;
+
+			percent = (100 / this.images.length * this.loaded).toFixed(0) + '%';
+			this.current.text.text(percent);
+
+			if (this.loaded === this.images.length && callback) {
+				this.current.text.remove();
+>>>>>>> master
 				callback.call(this);
 			}
 		},
