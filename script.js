@@ -86,7 +86,7 @@
 
 			effect = this.effects[randomInteger(this.effects.length - 1)];
 
-			// effect = this.effects[3];
+			// effect = this.effects[2];
 
 			effect.bind(this)(this.current, cached, this.gallery, function () {
 				if (cached.image) {
@@ -119,15 +119,20 @@
 		// triangle
 		function (newImage, oldImage, gallery, callback) {
 			var arrow = gallery.polygon('0,0 30,50 0,100'),
-				rect = gallery.rect(0, 100).move(0, 0),
+				rect = gallery.rect(100, 100).move(-100, 0),
 				clip = newImage.clip = gallery.clip().add(arrow).add(rect),
-				image = newImage.image.clipWith(clip);
+				image = newImage.image.clipWith(clip),
+				direction = randomInteger(3);
+
+			if (direction === 1) clip.translate(100, 0).rotate(90);
+			if (direction === 2) clip.translate(100, 100).rotate(180);
+			if (direction === 3) clip.translate(0, 100).rotate(270);
 
 			clip
 				.animate(this.duration, this.easing, 0)
 				.during(function (pos, morph) {
-					arrow.move(pos * 100, 0);
-					rect.size(pos * 100 + 1, 100);
+					arrow.translate(morph(0, 100), 0);
+					rect.translate(morph(0, 100) + 1, 0);
 				})
 				.after(callback || function () {});
 		},
@@ -137,7 +142,12 @@
 			var circle = gallery.circle(80).move(200,0),
 				rect = gallery.rect(80, 80).move(91, 10),
 				clip = newImage.clip = gallery.clip().add(rect).add(circle),
-				image = newImage.image.clipWith(clip);
+				image = newImage.image.clipWith(clip),
+				direction = randomInteger(3);
+
+			if (direction === 1) clip.translate(100, 0).rotate(90);
+			if (direction === 2) clip.translate(100, 100).rotate(180);
+			if (direction === 3) clip.translate(0, 100).rotate(270);
 
 			clip
 				.animate(this.duration, this.easing, 0)
@@ -154,11 +164,14 @@
 				image = newImage.image.clipWith(clip),
 				stripes = [], stripe, x;
 
+			// vertical / horisontal
+			if (randomInteger(1) === 1) clip.translate(100, 0).rotate(90);
+
 			for (x = 0; x < 10; x++) {
 				stripe = {};
 
 				stripe.dxPos = randomInteger(80);
-				stripe.initPos = randomInteger(2) === 1 ? 1 : -1;
+				stripe.initPos = randomInteger(1) === 1 ? 1 : -1;
 				stripe.startPos = stripe.initPos * stripe.dxPos + stripe.initPos * 80;
 
 				stripe.el = gallery.rect(9, 80).move(8 * x + 10, 10);
