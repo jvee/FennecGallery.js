@@ -86,7 +86,7 @@
 
 			effect = this.effects[randomInteger(this.effects.length - 1)];
 
-			// effect = this.effects[2];
+			effect = this.effects[2];
 
 			effect.bind(this)(this.current, cached, this.gallery, function () {
 				if (cached.image) {
@@ -139,8 +139,8 @@
 
 		// radian
 		function (newImage, oldImage, gallery, callback) {
-			var circle = gallery.circle(80).move(200,0),
-				rect = gallery.rect(80, 80).move(91, 10),
+			var circle = gallery.circle(80).move(90,10),
+				rect = gallery.rect(80, 80).move(130, 10),
 				clip = newImage.clip = gallery.clip().add(rect).add(circle),
 				image = newImage.image.clipWith(clip),
 				direction = randomInteger(3);
@@ -152,8 +152,8 @@
 			clip
 				.animate(this.duration, this.easing, 0)
 				.during(function (pos, morph) {
-					circle.move((1 - pos) * 120 - 30, 10);
-					rect.move((1-pos) * 120 + 10, 10);
+					circle.translate(morph(0, -120), 0);
+					rect.translate(morph(0, -120), 0);
 				})
 				.after(callback || function () {});
 		},
