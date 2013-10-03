@@ -86,7 +86,7 @@
 
 			effect = this.effects[randomInteger(this.effects.length - 1)];
 
-			effect = this.effects[2];
+			//effect = this.effects[2];
 
 			effect.bind(this)(this.current, cached, this.gallery, function () {
 				if (cached.image) {
